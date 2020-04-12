@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&display=swap');
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+.main {
+  margin-top: 5rem;
+  width: 40rem;
+  min-height: 30rem;
+  background-color: #7f78d2;
+  background-color: #f4f4f4;
+
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search_results {
+  min-height: 10rem;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form {
+  width: 30rem;
+  height: 9rem;
+  /* background-color: wheat; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.input {
+  width: 90%;
+  height: 2rem;
+  border: none;
+  margin-right: 1rem;
+  font-size: 1.1rem;
+  padding: 0.3rem;
+}
+.input:focus {
+  outline: none;
+}
+.input::placeholder {
+  font-family: 'Montserrat', sans-serif;
+  color: grey;
+}
+
+.button {
+  width: 6.5rem;
+  height: 2.5rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+}
+
+.download-button {
+  height: 2rem;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+.download-div {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  height: 4rem;
+  width: 4rem;
+}
+
+.loader > img {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  width: 70%;
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.relatedButton {
+  width: 6rem;
+  height: 2rem;
+  border: none;
+  cursor: pointer;
+}
+.imageBox {
+  width: 4.5rem;
+  height: 3.5rem;
+}
+
+.imageBox > img {
+  width: 100%;
+  height: 100%;
+}
+
+.infoBox {
+  max-width: 10rem;
+}
+
+.download_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6rem;
+  height: 3rem;
+}
+
+.download_loader {
+  width: 2rem;
+  height: 2rem;
+}
+
+.download_loader > img {
+  width: 100%;
+  height: 100%;
+}

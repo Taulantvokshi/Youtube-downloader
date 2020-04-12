@@ -1,0 +1,22 @@
+{
+  "name": "downloadyoutube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "ffmpeg-extract-audio": "^1.0.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "ytdl-core": "^2.0.1",
+    "ytsr": "^0.1.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
