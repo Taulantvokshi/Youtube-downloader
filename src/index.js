@@ -1,3 +1,4 @@
+import axios from 'axios';
 const main = document.querySelector('.main');
 const form = document.querySelector('.form');
 const loader = document.querySelector('.loader');
@@ -46,13 +47,15 @@ const displayRelated = (list) => {
           downloadLoader.style.display = 'none';
           e.target.style.display = 'inline-block';
           e.target.disabled = true;
-          console.log(response);
           let a = document.createElement('a');
 
-          // const titleId = response.data.title;
-          // a.setAttribute('href', `./upload/${titleId}.mp3`);
-          // a.setAttribute('download', titleId);
-          // a.click();
+          const titleId = response.data.title;
+          a.setAttribute('href', `./upload/${titleId}.mp3`);
+          a.setAttribute('download', titleId);
+          a.click();
+        })
+        .catch((error) => {
+          console.log(error);
         });
     });
 
@@ -84,7 +87,7 @@ form.addEventListener('submit', (e) => {
       input.value = '';
     })
     .catch((error) => {
-      console.log(error);
+      console.log({ message: 'something went wrong', error });
     });
 });
 

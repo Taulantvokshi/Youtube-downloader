@@ -4,18 +4,25 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "ffmpeg-extract-audio": "^1.0.2",
     "fluent-ffmpeg": "^2.1.2",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
     "ytdl-core": "^2.0.1",
     "ytsr": "^0.1.12"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start-dev": "webpack -w & nodemon server.js"
   },
   "author": "",
   "license": "ISC"

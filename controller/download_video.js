@@ -47,13 +47,11 @@ exports.downloadVideo = (req, res, next) => {
               });
           })
           .catch((error) => {
-            console.log(error, 'EROOOOOOOOR');
             throw new Error(error);
           });
       })
       .on('error', (error) => {
-        console.log('LALALALALA');
-        throw new Error(error);
+        res.json({ posted: false, error });
       });
   }
 };
