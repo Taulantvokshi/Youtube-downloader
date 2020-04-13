@@ -13,6 +13,7 @@ const converter = promisify(mediaConverter);
 
 exports.searchVideos = (req, res, next) => {
   const searchString = req.body.search;
+
   search(searchString)
     .then((results) => {
       res.json({ message: 'finished', info: results });
@@ -25,6 +26,7 @@ exports.searchVideos = (req, res, next) => {
 exports.downloadVideo = (req, res, next) => {
   const searchString = req.body.url;
   const title = req.body.title;
+  const format = req.body.format;
   const videoId = ytdl.getURLVideoID(searchString);
 
   if (!ytdl.validateID(videoId)) {
@@ -36,19 +38,23 @@ exports.downloadVideo = (req, res, next) => {
       .pipe(fs.createWriteStream(`public/upload/${title}.mp4`))
       .on('finish', () => {
         //MP4 to Mp3 Converter
-        converter(title)
-          .then((_) => {
-            unlink(`./public/upload/${title}.mp4`)
-              .then(() => {
-                res.json({ posted: true, title });
-              })
-              .catch((error) => {
-                throw new Error(error);
-              });
-          })
-          .catch((error) => {
-            throw new Error(error);
-          });
+        if (format === 'mp3') {
+          converter(title)
+            .then((_) => {
+              unlink(`./public/upload/${title}.mp4`)
+                .then(() => {
+                  res.json({ posted: true, title });
+                })
+                .catch((error) => {
+                  throw new Error(error);
+                });
+            })
+            .catch((error) => {
+              throw new Error(error);
+            });
+        } else {
+          res.json({ posted: true, title });
+        }
       })
       .on('error', (error) => {
         res.json({ posted: false, error });

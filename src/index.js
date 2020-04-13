@@ -1,106 +1,47 @@
 import axios from 'axios';
-const main = document.querySelector('.main');
-const form = document.querySelector('.form');
+import displayResults from './results';
+// const form = document.querySelector('.form');
 const loader = document.querySelector('.loader');
 const input = document.querySelector('.input');
 const searchResults = document.querySelector('.search_results');
-
-//const downloadButton = document.querySelector('.download-button');
-
-const displayRelated = (list) => {
-  list.forEach((video) => {
-    //Each result container
-    const container = document.createElement('div');
-    container.className = 'container';
-
-    //Image div
-    const imageBox = document.createElement('div');
-    imageBox.className = 'imageBox';
-    const image = document.createElement('img');
-    image.src = video.thumbnail;
-
-    //Video Title
-    const info = document.createElement('div');
-    info.className = 'infoBox';
-    const p = document.createElement('p');
-    p.textContent = video.title.split('').slice(0, 45).join('') + '...';
-
-    //Download Container
-    const downloadContainer = document.createElement('div');
-    const button = document.createElement('button');
-    button.className = 'relatedButton';
-    button.textContent = 'download';
-    downloadContainer.className = 'download_container';
-    downloadContainer.appendChild(button);
-
-    button.addEventListener('click', (e) => {
-      e.target.style.display = 'none';
-      const downloadLoader = document.createElement('div');
-      const loaderImage = document.createElement('img');
-      downloadLoader.className = 'download_loader';
-      loaderImage.setAttribute('src', 'images/loader.gif');
-      downloadLoader.appendChild(loaderImage);
-      downloadContainer.appendChild(downloadLoader);
-      axios
-        .post('/download_video', { url: video.link, title: video.title })
-        .then((response) => {
-          downloadLoader.style.display = 'none';
-          e.target.style.display = 'inline-block';
-          e.target.disabled = true;
-          let a = document.createElement('a');
-
-          const titleId = response.data.title;
-          a.setAttribute('href', `./upload/${titleId}.mp3`);
-          a.setAttribute('download', titleId);
-          a.click();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-
-    //APEND ACTIONS
-    info.appendChild(p);
-    imageBox.appendChild(image);
-    container.appendChild(imageBox);
-    container.appendChild(info);
-    container.appendChild(downloadContainer);
-    searchResults.appendChild(container);
-  });
-};
-
+const author = document.querySelector('.author');
+const mp4button = document.querySelector('.media-select-mp4');
+const mp3button = document.querySelector('.media-select-mp3s');
 loader.style.display = 'none';
 
-form.addEventListener('submit', (e) => {
-  loader.style.display = 'inline-block';
-  searchResults.innerHTML = '';
-  e.preventDefault();
+const postSearch = (value, format) => {
   axios({
     url: '/search_videos',
     method: 'POST',
-    data: { search: e.target.input.value },
+    data: { search: value },
   })
     .then((response) => {
       loader.style.display = 'none';
-      console.log(response.data, 'XOXOX');
-      displayRelated(response.data.info.items);
-      input.value = '';
+      displayResults(response.data.info.items, format);
+      //input.value = '';
     })
     .catch((error) => {
+      loader.style.display = 'none';
+      input.style.border = '1px solid #eb4559';
       console.log({ message: 'something went wrong', error });
     });
+};
+
+mp3button.addEventListener('click', () => {
+  if (input.value) {
+    input.style.border = '1px solid #e0e0e0';
+  }
+  loader.style.display = 'inline-block';
+  author.style.display = 'none';
+  searchResults.innerHTML = '';
+  postSearch(input.value, 'mp3');
 });
-
-// downloadButton.addEventListener('click', (e) => {
-//   downloadButton.disabled = true;
-
-//   if (state.videoId) {
-//     console.log(state.videoId, 'hello');
-//     const id = state.videoId;
-//     let a = document.createElement('a');
-//     a.setAttribute('href', `./upload/${id}.mp4`);
-//     a.setAttribute('download', id);
-//     a.click();
-//     state.videoId = null;
-//   }
-// });
+mp4button.addEventListener('click', () => {
+  if (input.value) {
+    input.style.border = '1px solid #e0e0e0';
+  }
+  loader.style.display = 'inline-block';
+  author.style.display = 'none';
+  searchResults.innerHTML = '';
+  postSearch(input.value, 'mp4');
+});

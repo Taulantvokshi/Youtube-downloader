@@ -2105,14 +2105,76 @@ process.umask = function() { return 0; };
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _results__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./results */ "./src/results.js");
 
-var main = document.querySelector('.main');
-var form = document.querySelector('.form');
+ // const form = document.querySelector('.form');
+
 var loader = document.querySelector('.loader');
 var input = document.querySelector('.input');
-var searchResults = document.querySelector('.search_results'); //const downloadButton = document.querySelector('.download-button');
+var searchResults = document.querySelector('.search_results');
+var author = document.querySelector('.author');
+var mp4button = document.querySelector('.media-select-mp4');
+var mp3button = document.querySelector('.media-select-mp3s');
+loader.style.display = 'none';
 
-var displayRelated = function displayRelated(list) {
+var postSearch = function postSearch(value, format) {
+  axios__WEBPACK_IMPORTED_MODULE_0___default()({
+    url: '/search_videos',
+    method: 'POST',
+    data: {
+      search: value
+    }
+  }).then(function (response) {
+    loader.style.display = 'none';
+    Object(_results__WEBPACK_IMPORTED_MODULE_1__["default"])(response.data.info.items, format); //input.value = '';
+  })["catch"](function (error) {
+    loader.style.display = 'none';
+    input.style.border = '1px solid #eb4559';
+    console.log({
+      message: 'something went wrong',
+      error: error
+    });
+  });
+};
+
+mp3button.addEventListener('click', function () {
+  if (input.value) {
+    input.style.border = '1px solid #e0e0e0';
+  }
+
+  loader.style.display = 'inline-block';
+  author.style.display = 'none';
+  searchResults.innerHTML = '';
+  postSearch(input.value, 'mp3');
+});
+mp4button.addEventListener('click', function () {
+  if (input.value) {
+    input.style.border = '1px solid #e0e0e0';
+  }
+
+  loader.style.display = 'inline-block';
+  author.style.display = 'none';
+  searchResults.innerHTML = '';
+  postSearch(input.value, 'mp4');
+});
+
+/***/ }),
+
+/***/ "./src/results.js":
+/*!************************!*\
+  !*** ./src/results.js ***!
+  \************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+var searchResults = document.querySelector('.search_results');
+
+/* harmony default export */ __webpack_exports__["default"] = (function (list, format) {
+  // eslint-disable-next-line max-statements
   list.forEach(function (video) {
     //Each result container
     var container = document.createElement('div');
@@ -2125,8 +2187,19 @@ var displayRelated = function displayRelated(list) {
 
     var info = document.createElement('div');
     info.className = 'infoBox';
-    var p = document.createElement('p');
-    p.textContent = video.title.split('').slice(0, 45).join('') + '...'; //Download Container
+    var titleBox = document.createElement('div');
+    titleBox.className = 'titleBox';
+    var songName = document.createElement('p');
+    songName.textContent = video.title.split('').slice(0, 45).join('') + '...';
+    titleBox.appendChild(songName);
+    var details = document.createElement('div');
+    details.className = 'details';
+    var views = document.createElement('p');
+    var duration = document.createElement('p');
+    duration.textContent = 'duration: ' + video.duration;
+    views.textContent = 'views: ' + video.views;
+    details.appendChild(views);
+    details.appendChild(duration); //Download Container
 
     var downloadContainer = document.createElement('div');
     var button = document.createElement('button');
@@ -2144,14 +2217,15 @@ var displayRelated = function displayRelated(list) {
       downloadContainer.appendChild(downloadLoader);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/download_video', {
         url: video.link,
-        title: video.title
+        title: video.title,
+        format: format
       }).then(function (response) {
         downloadLoader.style.display = 'none';
         e.target.style.display = 'inline-block';
         e.target.disabled = true;
         var a = document.createElement('a');
         var titleId = response.data.title;
-        a.setAttribute('href', "./upload/".concat(titleId, ".mp3"));
+        a.setAttribute('href', "./upload/".concat(titleId, ".").concat(format));
         a.setAttribute('download', titleId);
         a.click();
       })["catch"](function (error) {
@@ -2159,49 +2233,15 @@ var displayRelated = function displayRelated(list) {
       });
     }); //APEND ACTIONS
 
-    info.appendChild(p);
+    info.appendChild(titleBox);
+    info.appendChild(details);
     imageBox.appendChild(image);
     container.appendChild(imageBox);
     container.appendChild(info);
     container.appendChild(downloadContainer);
     searchResults.appendChild(container);
   });
-};
-
-loader.style.display = 'none';
-form.addEventListener('submit', function (e) {
-  loader.style.display = 'inline-block';
-  searchResults.innerHTML = '';
-  e.preventDefault();
-  axios__WEBPACK_IMPORTED_MODULE_0___default()({
-    url: '/search_videos',
-    method: 'POST',
-    data: {
-      search: e.target.input.value
-    }
-  }).then(function (response) {
-    loader.style.display = 'none';
-    console.log(response.data, 'XOXOX');
-    displayRelated(response.data.info.items);
-    input.value = '';
-  })["catch"](function (error) {
-    console.log({
-      message: 'something went wrong',
-      error: error
-    });
-  });
-}); // downloadButton.addEventListener('click', (e) => {
-//   downloadButton.disabled = true;
-//   if (state.videoId) {
-//     console.log(state.videoId, 'hello');
-//     const id = state.videoId;
-//     let a = document.createElement('a');
-//     a.setAttribute('href', `./upload/${id}.mp4`);
-//     a.setAttribute('download', id);
-//     a.click();
-//     state.videoId = null;
-//   }
-// });
+});
 
 /***/ })
 

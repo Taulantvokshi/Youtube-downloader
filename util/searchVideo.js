@@ -7,7 +7,7 @@ const searchVideo = (search, callback) => {
     filter = filters.get('Type').find((o) => o.name === 'Video');
     ytsr.getFilters(filter.ref, function (err, filters) {
       if (err) throw err;
-      filter = filters.get('Duration').find((o) => o.name.startsWith('Short'));
+      //filters.get('Duration').find((o) => o.name.startsWith('Short'));
       var options = {
         limit: 10,
         nextpageRef: filter.ref,
