@@ -3,11 +3,8 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 
-const {
-  downloadVideo,
-  removeDownload,
-  searchVideos,
-} = require('./controller/download_video');
+const { downloadVideo } = require('./controller/download_video');
+const { searchVideos } = require('./controller/search_videos');
 const cors = require('cors');
 
 app.use(cors());
@@ -17,7 +14,7 @@ app.use(express.json());
 //Dowload video
 app.post('/search_videos', searchVideos);
 app.post('/download_video', downloadVideo);
-app.post('/remove_download', removeDownload);
+//app.post('/remove_download', removeDownload);
 
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(express.static(path.join(__dirname, 'upload')));

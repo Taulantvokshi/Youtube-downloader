@@ -2224,9 +2224,10 @@ var searchResults = document.querySelector('.search_results');
         e.target.style.display = 'inline-block';
         e.target.disabled = true;
         var a = document.createElement('a');
-        var titleId = response.data.title;
-        a.setAttribute('href', "./upload/".concat(titleId, ".").concat(format));
-        a.setAttribute('download', titleId);
+        var downloadLink = response.data.response.Location;
+        var fileName = response.data.response.Key;
+        a.setAttribute('href', "".concat(downloadLink));
+        a.setAttribute('download', fileName);
         a.click();
       })["catch"](function (error) {
         console.log(error);

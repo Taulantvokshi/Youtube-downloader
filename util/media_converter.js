@@ -1,19 +1,27 @@
 const ffmpeg = require('fluent-ffmpeg');
 const fs = require('fs');
+const uploadStream = require('../util/aws-upload');
 
 // /usr/local/Cellar/ffmpeg/
 //usr/local/Cellar/ffmpeg/4.2.2_2/bin/
 
-const mediaConverter = (filePath, callback) => {
+const mediaConverter = (filePath, fileName, callback) => {
+  const exactFileName = fileName.slice(0, fileName.length - 4);
+  const { writeStream, promise } = uploadStream({
+    Bucket: 'youtube-converter-mp3-mp4',
+    Key: `${exactFileName}.mp3`,
+  });
   ffmpeg.setFfmpegPath('ffmpeg');
-  ffmpeg(`public/upload/${filePath}.mp4`)
+  ffmpeg(filePath)
     .fromFormat('mp4')
     .toFormat('mp3')
-    .pipe(fs.createWriteStream(`public/upload/${filePath}.mp3`))
-    .on('finish', (results) => {
+
+    .pipe(writeStream);
+  promise
+    .then((results) => {
       callback(null, results);
     })
-    .on('error', (error) => {
+    .catch((error) => {
       callback(error);
     });
 };

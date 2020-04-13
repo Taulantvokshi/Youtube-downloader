@@ -58,10 +58,12 @@ export default (list, format) => {
           downloadLoader.style.display = 'none';
           e.target.style.display = 'inline-block';
           e.target.disabled = true;
+
           let a = document.createElement('a');
-          const titleId = response.data.title;
-          a.setAttribute('href', `./upload/${titleId}.${format}`);
-          a.setAttribute('download', titleId);
+          const downloadLink = response.data.response.Location;
+          const fileName = response.data.response.Key;
+          a.setAttribute('href', `${downloadLink}`);
+          a.setAttribute('download', fileName);
           a.click();
         })
         .catch((error) => {

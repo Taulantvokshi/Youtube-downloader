@@ -1,29 +1,21 @@
+//Node
 const fs = require('fs');
-const ytdl = require('ytdl-core');
-const { PassThrough } = require('stream');
-// const youtubeParser = require('../util/get_video_id');
 const { promisify } = require('util');
-const searchVideo = require('../util/searchVideo');
-const mediaConverter = require('../util/media_converter');
 
-//Converet callback to promisess
-const search = promisify(searchVideo);
-const unlink = promisify(fs.unlink);
+//npm
+const ytdl = require('ytdl-core');
+const mediaConverter = require('../util/media_converter');
+const uploadStream = require('../util/aws-upload');
+//Promisify
 const converter = promisify(mediaConverter);
 
-exports.searchVideos = (req, res, next) => {
-  const searchString = req.body.search;
-
-  search(searchString)
-    .then((results) => {
-      res.json({ message: 'finished', info: results });
-    })
-    .catch((error) => {
-      res.status(404).json({ message: 'Not Found', error });
-    });
-};
-
+//
 exports.downloadVideo = (req, res, next) => {
+  const { writeStream, promise } = uploadStream({
+    Bucket: 'youtube-converter-mp3-mp4',
+    Key: `${req.body.title}.mp4`,
+  });
+
   const searchString = req.body.url;
   const title = req.body.title;
   const format = req.body.format;
@@ -35,33 +27,21 @@ exports.downloadVideo = (req, res, next) => {
     ytdl(searchString, {
       //filter: (format) => format.container === 'mp4',
     })
-      .pipe(fs.createWriteStream(`public/upload/${title}.mp4`))
-      .on('finish', () => {
-        //MP4 to Mp3 Converter
-        if (format === 'mp3') {
-          converter(title)
-            .then((_) => {
-              unlink(`./public/upload/${title}.mp4`)
-                .then(() => {
-                  res.json({ posted: true, title });
-                })
-                .catch((error) => {
-                  throw new Error(error);
-                });
-            })
-            .catch((error) => {
-              throw new Error(error);
-            });
-        } else {
-          res.json({ posted: true, title });
-        }
-      })
-      .on('error', (error) => {
-        res.json({ posted: false, error });
-      });
-  }
-};
+      //fs.createWriteStream(`public/upload/${title}.mp4`
+      .pipe(writeStream);
 
-exports.removeDownload = (req, res) => {
-  const id = req.body.url;
+    promise.then((results) => {
+      if (format === 'mp3') {
+        converter(results.Location, results.Key)
+          .then((mp3res) => {
+            res.json({ posted: true, title, response: mp3res });
+          })
+          .catch((error) => {
+            throw new Error(error);
+          });
+      } else {
+        res.json({ posted: true, title, response: results });
+      }
+    });
+  }
 };
