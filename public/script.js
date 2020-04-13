@@ -40,20 +40,19 @@ const displayRelated = (list) => {
       loaderImage.setAttribute('src', 'images/loader.gif');
       downloadLoader.appendChild(loaderImage);
       downloadContainer.appendChild(downloadLoader);
-
       axios
         .post('/download_video', { url: video.link, title: video.title })
         .then((response) => {
           downloadLoader.style.display = 'none';
           e.target.style.display = 'inline-block';
           e.target.disabled = true;
-
+          console.log(response);
           let a = document.createElement('a');
 
-          const titleId = response.data.title;
-          a.setAttribute('href', `./upload/${titleId}.mp4`);
-          a.setAttribute('download', titleId);
-          a.click();
+          // const titleId = response.data.title;
+          // a.setAttribute('href', `./upload/${titleId}.mp3`);
+          // a.setAttribute('download', titleId);
+          // a.click();
         });
     });
 

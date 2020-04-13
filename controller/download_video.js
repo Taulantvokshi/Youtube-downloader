@@ -1,5 +1,6 @@
 const fs = require('fs');
 const ytdl = require('ytdl-core');
+const { PassThrough } = require('stream');
 // const youtubeParser = require('../util/get_video_id');
 const { promisify } = require('util');
 const searchVideo = require('../util/searchVideo');
@@ -10,15 +11,6 @@ const search = promisify(searchVideo);
 const unlink = promisify(fs.unlink);
 const converter = promisify(mediaConverter);
 
-// converter('pUjE9H8QlA4')
-//   .then((results) => {
-//     console.log('success', results);
-//   })
-//   .catch((error) => {
-//     console.log('error');
-//     throw new Error(error);
-//   })
-
 exports.searchVideos = (req, res, next) => {
   const searchString = req.body.search;
   search(searchString)
@@ -26,8 +18,7 @@ exports.searchVideos = (req, res, next) => {
       res.json({ message: 'finished', info: results });
     })
     .catch((error) => {
-      res.status(404).json({ message: 'Not Found' });
-      throw new Error(error);
+      res.status(404).json({ message: 'Not Found', error });
     });
 };
 
@@ -40,18 +31,33 @@ exports.downloadVideo = (req, res, next) => {
     res.status(404).json({ messge: 'Not a valid URL!' });
   } else {
     ytdl(searchString, {
-      filter: (format) => format.container === 'mp4',
+      //filter: (format) => format.container === 'mp4',
     })
       .pipe(fs.createWriteStream(`public/upload/${title}.mp4`))
       .on('finish', () => {
-        res.json({ posted: true, title });
+        //MP4 to Mp3 Converter
+        converter(title)
+          .then((_) => {
+            unlink(`./public/upload/${title}.mp4`)
+              .then(() => {
+                res.json({ posted: true, title });
+              })
+              .catch((error) => {
+                throw new Error(error);
+              });
+          })
+          .catch((error) => {
+            console.log(error, 'EROOOOOOOOR');
+            throw new Error(error);
+          });
+      })
+      .on('error', (error) => {
+        console.log('LALALALALA');
+        throw new Error(error);
       });
   }
 };
 
 exports.removeDownload = (req, res) => {
   const id = req.body.url;
-  unlink(`./public/upload/${id}.mp4`).then(() => {
-    res.status(200).send({ message: 'success' });
-  });
 };

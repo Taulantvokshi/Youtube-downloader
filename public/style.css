@@ -7,9 +7,9 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 .main {
-  margin-top: 5rem;
+  margin-top: 2rem;
   width: 40rem;
-  min-height: 30rem;
+  min-height: 100vh;
   background-color: #7f78d2;
   background-color: #f4f4f4;
 
@@ -29,7 +29,7 @@ body {
 }
 
 .form {
-  width: 30rem;
+  width: 35rem;
   height: 9rem;
   /* background-color: wheat; */
   display: flex;
@@ -45,6 +45,8 @@ body {
   margin-right: 1rem;
   font-size: 1.1rem;
   padding: 0.3rem;
+  padding-left: 0.5rem;
+  border: 1px solid #e0e0e0;
 }
 .input:focus {
   outline: none;
@@ -63,6 +65,7 @@ body {
   justify-content: center;
   align-items: center;
   font-family: inherit;
+  border: 1px solid #e0e0e0;
 }
 
 .download-button {
@@ -90,8 +93,8 @@ body {
 }
 
 .container {
-  width: 70%;
-  height: 5rem;
+  width: 80%;
+  height: 6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -104,8 +107,10 @@ body {
   cursor: pointer;
 }
 .imageBox {
-  width: 4.5rem;
-  height: 3.5rem;
+  width: 7rem;
+  height: 5rem;
+  border: 2px solid white;
+  box-shadow: 0px 10px 49px -23px rgba(0, 0, 0, 0.75);
 }
 
 .imageBox > img {
@@ -114,7 +119,10 @@ body {
 }
 
 .infoBox {
-  max-width: 10rem;
+  width: 15rem;
+}
+.infoBox > p {
+  font-size: 0.8rem;
 }
 
 .download_container {

@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const mediaConverter = (filePath, callback) => {
   ffmpeg.setFfmpegPath('ffmpeg');
-  return ffmpeg(`public/upload/${filePath}.mp4`)
+  ffmpeg(`public/upload/${filePath}.mp4`)
     .fromFormat('mp4')
     .toFormat('mp3')
     .pipe(fs.createWriteStream(`public/upload/${filePath}.mp3`))
