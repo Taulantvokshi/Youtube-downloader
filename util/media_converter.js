@@ -11,7 +11,7 @@ const mediaConverter = (filePath, fileName, callback) => {
     Bucket: 'youtube-converter-mp3-mp4',
     Key: `${exactFileName}.mp3`,
   });
-  ffmpeg.setFfmpegPath('ffmpeg');
+  ffmpeg.setFfmpegPath('/usr/bin/ffmpeg');
   ffmpeg(filePath)
     .fromFormat('mp4')
     .toFormat('mp3')
