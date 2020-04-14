@@ -1,1 +1,0 @@
-web: node webpack -w & nodemon server.js
