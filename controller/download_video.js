@@ -42,6 +42,10 @@ exports.downloadVideo = (req, res, next) => {
             res.json({ posted: true, title, response: results });
           }
         });
+      })
+      .on('error', (error) => {
+        console.log(error, 'op');
+        throw new Error(error);
       });
   }
 };
