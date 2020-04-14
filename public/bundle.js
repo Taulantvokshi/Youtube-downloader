@@ -2226,7 +2226,7 @@ var searchResults = document.querySelector('.search_results');
         var a = document.createElement('a');
         var downloadLink = response.data.response.Location;
         var fileName = response.data.response.Key;
-        a.setAttribute('href', "".concat(downloadLink));
+        a.setAttribute('href', downloadLink);
         a.setAttribute('download', fileName);
         a.click();
       })["catch"](function (error) {

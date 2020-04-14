@@ -62,7 +62,7 @@ export default (list, format) => {
           let a = document.createElement('a');
           const downloadLink = response.data.response.Location;
           const fileName = response.data.response.Key;
-          a.setAttribute('href', `${downloadLink}`);
+          a.setAttribute('href', downloadLink);
           a.setAttribute('download', fileName);
           a.click();
         })

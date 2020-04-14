@@ -49,17 +49,3 @@ exports.downloadVideo = (req, res, next) => {
       });
   }
 };
-
-// {
-//   "Version": "2012-10-17",
-//   "Id": "Policy1580999990433",
-//   "Statement": [
-//       {
-//           "Sid": "Stmt1580999988648",
-//           "Effect": "Allow",
-//           "Principal": "*",
-//           "Action": "s3:GetObject",
-//           "Resource": "arn:aws:s3:::youtube-converter-mp3-mp4/*"
-//       }
-//   ]
-// }
