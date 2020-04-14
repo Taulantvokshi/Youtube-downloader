@@ -3,8 +3,8 @@ const stream = require('stream');
 
 const uploadStream = ({ Bucket, Key }) => {
   aws.config.update({
-    secretAccessKey: process.env.SecretAccessKey,
-    accessKeyId: process.env.AccessKeyId,
+    secretAccessKey: 'gZ7Y8Zd5o0CgBYrlJVxjSAJhyUBBOdMgVKprt6sQ',
+    accessKeyId: 'AKIAZFTSOWX3PVEAZKE7',
     region: 'us-east-1',
   });
   const s3 = new aws.S3();
