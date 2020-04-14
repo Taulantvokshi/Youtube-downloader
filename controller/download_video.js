@@ -27,21 +27,21 @@ exports.downloadVideo = (req, res, next) => {
     ytdl(searchString, {
       //filter: (format) => format.container === 'mp4',
     })
-      //fs.createWriteStream(`public/upload/${title}.mp4`
-      .pipe(writeStream);
-
-    promise.then((results) => {
-      if (format === 'mp3') {
-        converter(results.Location, results.Key)
-          .then((mp3res) => {
-            res.json({ posted: true, title, response: mp3res });
-          })
-          .catch((error) => {
-            throw new Error(error);
-          });
-      } else {
-        res.json({ posted: true, title, response: results });
-      }
-    });
+      .pipe(writeStream)
+      .on('finish', () => {
+        promise.then((results) => {
+          if (format === 'mp3') {
+            converter(results.Location, results.Key)
+              .then((mp3res) => {
+                res.json({ posted: true, title, response: mp3res });
+              })
+              .catch((error) => {
+                throw new Error(error);
+              });
+          } else {
+            res.json({ posted: true, title, response: results });
+          }
+        });
+      });
   }
 };

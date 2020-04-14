@@ -2230,7 +2230,8 @@ var searchResults = document.querySelector('.search_results');
         a.setAttribute('download', fileName);
         a.click();
       })["catch"](function (error) {
-        console.log(error);
+        console.log(error, 'X1@3');
+        throw new Error(error);
       });
     }); //APEND ACTIONS
 
