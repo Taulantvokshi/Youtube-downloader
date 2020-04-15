@@ -1,10 +1,9 @@
 const ytdl = require('ytdl-core');
 const uploadStream = require('../util/aws-upload');
 const ffmpeg = require('fluent-ffmpeg');
-const FFmpegPath =
-  process.env.ffmpegPath ||
-  '/usr/local/bin/ffmpeg/ffmpeg-4.2.2-amd64-static/ffmpeg';
-
+// const FFmpegPath =
+//   process.env.ffmpegPath ||
+//   '/usr/local/bin/ffmpeg/ffmpeg-4.2.2-amd64-static/ffmpeg';
 exports.downloadVideo = (req, res, next) => {
   const searchString = req.body.url;
   const title = req.body.title;
@@ -24,18 +23,28 @@ exports.downloadVideo = (req, res, next) => {
       stream.pipe(writeStream);
       promise
         .then((results) => {
-          res.json({ posted: true, title, response: results });
+          res.json({
+            posted: true,
+            title,
+            response: results,
+          });
         })
         .catch((error) => {
           res.status(422).json({ message: 'Unprocessable Entity', error });
         });
     } else if (format === 'mp3') {
       const proc = new ffmpeg({ source: stream });
-      proc.setFfmpegPath(FFmpegPath);
+      proc.setFfmpegPath(
+        '/usr/local/bin/ffmpeg/ffmpeg-4.2.2-amd64-static/ffmpeg'
+      );
       proc.toFormat('mp3').pipe(writeStream);
       promise
         .then((mp3Results) => {
-          res.json({ posted: true, title, response: mp3Results });
+          res.json({
+            posted: true,
+            title,
+            response: mp3Results,
+          });
         })
         .catch((error) => {
           res.status(422).json({ message: 'Unprocessable Entity', error });

@@ -71,7 +71,7 @@ export default (list, format) => {
         });
     });
 
-    //APEND ACTIONS
+    //APPEND ACTIONS
     info.appendChild(titleBox);
     info.appendChild(details);
     imageBox.appendChild(image);

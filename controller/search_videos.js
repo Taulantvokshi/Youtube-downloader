@@ -4,7 +4,6 @@ const search = promisify(searchVideo);
 
 exports.searchVideos = (req, res, next) => {
   const searchString = req.body.search;
-
   search(searchString)
     .then((results) => {
       res.json({ message: 'finished', info: results });

@@ -2115,7 +2115,9 @@ var searchResults = document.querySelector('.search_results');
 var author = document.querySelector('.author');
 var mp4button = document.querySelector('.media-select-mp4');
 var mp3button = document.querySelector('.media-select-mp3s');
+var errorComp = document.querySelector('.error');
 loader.style.display = 'none';
+errorComp.style.display = 'none';
 
 var postSearch = function postSearch(value, format) {
   axios__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -2126,11 +2128,12 @@ var postSearch = function postSearch(value, format) {
     }
   }).then(function (response) {
     loader.style.display = 'none';
-    Object(_results__WEBPACK_IMPORTED_MODULE_1__["default"])(response.data.info.items, format); //input.value = '';
+    Object(_results__WEBPACK_IMPORTED_MODULE_1__["default"])(response.data.info.items, format);
   })["catch"](function (error) {
     loader.style.display = 'none';
     input.style.border = '1px solid #eb4559';
-    console.log({
+    errorComp.style.display = 'inline-block';
+    console.error({
       message: 'something went wrong',
       error: error
     });
@@ -2140,9 +2143,11 @@ var postSearch = function postSearch(value, format) {
 mp3button.addEventListener('click', function () {
   if (input.value) {
     input.style.border = '1px solid #e0e0e0';
+    errorComp.childNodes[0].textContent = 'Something went wrong!';
   }
 
   loader.style.display = 'inline-block';
+  errorComp.style.display = 'none';
   author.style.display = 'none';
   searchResults.innerHTML = '';
   postSearch(input.value, 'mp3');
@@ -2150,8 +2155,10 @@ mp3button.addEventListener('click', function () {
 mp4button.addEventListener('click', function () {
   if (input.value) {
     input.style.border = '1px solid #e0e0e0';
+    errorComp.childNodes[0].textContent = 'Something went wrong!';
   }
 
+  errorComp.style.display = 'none';
   loader.style.display = 'inline-block';
   author.style.display = 'none';
   searchResults.innerHTML = '';
@@ -2232,7 +2239,7 @@ var searchResults = document.querySelector('.search_results');
       })["catch"](function (error) {
         throw new Error(error);
       });
-    }); //APEND ACTIONS
+    }); //APPEND ACTIONS
 
     info.appendChild(titleBox);
     info.appendChild(details);
