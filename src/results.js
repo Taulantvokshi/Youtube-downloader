@@ -67,7 +67,6 @@ export default (list, format) => {
           a.click();
         })
         .catch((error) => {
-          console.log(error, 'X1@3');
           throw new Error(error);
         });
     });
