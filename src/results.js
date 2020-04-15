@@ -1,6 +1,6 @@
 const searchResults = document.querySelector('.search_results');
 import axios from 'axios';
-
+import FileSaver from 'file-saver';
 export default (list, format) => {
   // eslint-disable-next-line max-statements
   list.forEach((video) => {
@@ -23,6 +23,7 @@ export default (list, format) => {
     songName.textContent = video.title.split('').slice(0, 45).join('') + '...';
     titleBox.appendChild(songName);
 
+    //Video Details
     const details = document.createElement('div');
     details.className = 'details';
     const views = document.createElement('p');
@@ -48,23 +49,34 @@ export default (list, format) => {
       downloadLoader.appendChild(loaderImage);
       downloadContainer.appendChild(downloadLoader);
 
-      axios
-        .post('/download_video', {
+      axios({
+        method: 'post',
+        url: '/download_video',
+        responseType: 'blob',
+        data: {
           url: video.link,
           title: video.title,
           format,
-        })
+        },
+      })
         .then((response) => {
           downloadLoader.style.display = 'none';
           e.target.style.display = 'inline-block';
           e.target.disabled = true;
+          const responseInfo = JSON.parse(response.config.data);
+          var file = new File(
+            [response.data],
+            responseInfo.title + '.' + responseInfo.format
+          );
+          FileSaver.saveAs(file);
 
-          let a = document.createElement('a');
-          const downloadLink = response.data.response.Location;
-          const fileName = response.data.response.Key;
-          a.setAttribute('href', downloadLink);
-          a.setAttribute('download', fileName);
-          a.click();
+          //Download with Url in this case URL from S3
+          // let a = document.createElement('a');
+          // const downloadLink = response.data.response.Location;
+          // const fileName = response.data.response.Key;
+          // a.setAttribute('href', downloadLink);
+          // a.setAttribute('download', fileName);
+          // a.click();
         })
         .catch((error) => {
           throw new Error(error);

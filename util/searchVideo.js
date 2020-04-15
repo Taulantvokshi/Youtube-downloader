@@ -16,6 +16,10 @@ const searchVideo = (search, callback) => {
         if (err) {
           callback(err);
         } else {
+          searchResults.items = searchResults.items.filter((item) => {
+            const minutes = item.duration.split(':')[0];
+            return Number(minutes) < 7.0;
+          });
           callback(null, searchResults);
         }
       });

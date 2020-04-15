@@ -1,6 +1,5 @@
 import axios from 'axios';
 import displayResults from './results';
-// const form = document.querySelector('.form');
 const loader = document.querySelector('.loader');
 const input = document.querySelector('.input');
 const searchResults = document.querySelector('.search_results');
@@ -17,6 +16,7 @@ const postSearch = (value, format) => {
     data: { search: value },
   })
     .then((response) => {
+      console.log(response);
       loader.style.display = 'none';
       displayResults(response.data.info.items, format);
     })
