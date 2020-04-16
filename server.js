@@ -16,6 +16,10 @@ app.use(express.json());
 app.post('/search_videos', searchVideos);
 app.post('/download_video', downloadVideo);
 
+app.post('/network', (req, res, next) => {
+  res.json(req.body);
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
