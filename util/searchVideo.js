@@ -12,13 +12,17 @@ const searchVideo = (search, callback) => {
         limit: 10,
         nextpageRef: filter.ref,
       };
-      ytsr(null, options, function (err, searchResults) {
-        if (err) {
-          callback(err);
+      ytsr(null, options, function (error, searchResults) {
+        if (error) {
+          callback(error);
         } else {
           searchResults.items = searchResults.items.filter((item) => {
-            const minutes = item.duration.split(':')[0];
-            return Number(minutes) < 7.0;
+            if (item.duration) {
+              const duration = item.duration.split(':');
+              if (duration.length <= 2) {
+                return Number(duration[0]) < 7.0;
+              }
+            }
           });
           callback(null, searchResults);
         }

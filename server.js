@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-//Dowload video
+//Routes
 app.post('/search_videos', searchVideos);
 app.post('/download_video', downloadVideo);
 

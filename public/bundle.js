@@ -2174,7 +2174,6 @@ var postSearch = function postSearch(value, format) {
       search: value
     }
   }).then(function (response) {
-    console.log(response);
     loader.style.display = 'none';
     Object(_results__WEBPACK_IMPORTED_MODULE_1__["default"])(response.data.info.items, format);
   })["catch"](function (error) {
@@ -2248,7 +2247,13 @@ var searchResults = document.querySelector('.search_results');
     var titleBox = document.createElement('div');
     titleBox.className = 'titleBox';
     var songName = document.createElement('p');
-    songName.textContent = video.title.split('').slice(0, 45).join('') + '...';
+
+    if (video.title.length < 60) {
+      songName.textContent = video.title;
+    } else {
+      songName.textContent = video.title.split('').slice(0, 60).join('') + '...';
+    }
+
     titleBox.appendChild(songName); //Video Details
 
     var details = document.createElement('div');

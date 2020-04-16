@@ -20,7 +20,12 @@ export default (list, format) => {
     const titleBox = document.createElement('div');
     titleBox.className = 'titleBox';
     const songName = document.createElement('p');
-    songName.textContent = video.title.split('').slice(0, 45).join('') + '...';
+    if (video.title.length < 60) {
+      songName.textContent = video.title;
+    } else {
+      songName.textContent =
+        video.title.split('').slice(0, 60).join('') + '...';
+    }
     titleBox.appendChild(songName);
 
     //Video Details

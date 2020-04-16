@@ -7,6 +7,7 @@ const author = document.querySelector('.author');
 const mp4button = document.querySelector('.media-select-mp4');
 const mp3button = document.querySelector('.media-select-mp3s');
 const errorComp = document.querySelector('.error');
+
 loader.style.display = 'none';
 errorComp.style.display = 'none';
 const postSearch = (value, format) => {
@@ -16,7 +17,6 @@ const postSearch = (value, format) => {
     data: { search: value },
   })
     .then((response) => {
-      console.log(response);
       loader.style.display = 'none';
       displayResults(response.data.info.items, format);
     })
