@@ -3,9 +3,13 @@ const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8000;
-
+const parseArgs = require('minimist');
 const { downloadVideo } = require('./controller/download_video');
 const { searchVideos } = require('./controller/search_videos');
+
+const args = parseArgs(process.argv.slice(2));
+const { port = '8080' } = args;
+
 const cors = require('cors');
 app.use(cors());
 
@@ -20,7 +24,7 @@ app.post('/network', (req, res, next) => {
   res.json(req.body);
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   if (path.extname(req.path).length) {
@@ -50,4 +54,8 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log('server is running');
+});
+
+app.listen(+port, '0.0.0.0', () => {
+  console.log(`Mixing it up on port ${port}`);
 });
