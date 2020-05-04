@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Author = () => {
+  let word = ' Github  ';
   return (
     <div className="author">
       <p>
@@ -9,7 +10,7 @@ const Author = () => {
         long it’s going to be working.
         <br />
         Check the
-        <a href="https://github.com/Taulantvokshi/youtube-downloader">Github</a>
+        <a href="https://github.com/Taulantvokshi/youtube-downloader">{word}</a>
         repo for implementation details. Thank You
         <br />
         <br />
