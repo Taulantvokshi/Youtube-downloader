@@ -20,7 +20,7 @@ app.use('/api', require('./api'));
 app.post('/network', (req, res, next) => {
   res.json(req.body);
 });
-
+//Static files served by nginx
 //app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', (req, res) => {
