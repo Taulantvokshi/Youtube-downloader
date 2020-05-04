@@ -1,7 +1,6 @@
 {
   "name": "downloadyoutube",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "dependencies": {
     "aws-sdk": "^2.656.0",
@@ -44,5 +43,14 @@
     "production": "webpack"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Taulantvokshi/Youtube-downloader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Taulantvokshi/Youtube-downloader/issues"
+  },
+  "homepage": "https://github.com/Taulantvokshi/Youtube-downloader#readme",
+  "description": ""
 }
