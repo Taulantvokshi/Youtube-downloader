@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
-const PORT = process.env.PORT || 8000;
+
 const parseArgs = require('minimist');
 
 const args = parseArgs(process.argv.slice(2));
@@ -37,10 +37,6 @@ app.use((err, req, res, next) => {
   console.error(err);
   console.error(err.stack);
   res.status(err.status || 500).send(err.message || 'Internal server error.');
-});
-
-app.listen(PORT, () => {
-  console.log('server is running');
 });
 
 app.listen(+port, '0.0.0.0', () => {
