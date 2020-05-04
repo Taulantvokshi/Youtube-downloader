@@ -56,7 +56,7 @@ export default (list, format) => {
 
       axios({
         method: 'post',
-        url: '/download_video',
+        url: '/api/download_video',
         responseType: 'blob',
         data: {
           url: video.link,

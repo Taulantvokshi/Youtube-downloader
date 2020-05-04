@@ -12,7 +12,7 @@ loader.style.display = 'none';
 errorComp.style.display = 'none';
 const postSearch = (value, format) => {
   axios({
-    url: '/search_videos',
+    url: '/api/search_videos',
     method: 'POST',
     data: { search: value },
   })

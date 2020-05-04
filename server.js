@@ -4,8 +4,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8000;
 const parseArgs = require('minimist');
-const { downloadVideo } = require('./controller/download_video');
-const { searchVideos } = require('./controller/search_videos');
 
 const args = parseArgs(process.argv.slice(2));
 const { port = '8080' } = args;
@@ -17,24 +15,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
 //Routes
-app.post('/search_videos', searchVideos);
-app.post('/download_video', downloadVideo);
+app.use('/api', require('./api'));
 
 app.post('/network', (req, res, next) => {
   res.json(req.body);
 });
 
-// app.use(express.static(path.join(__dirname, 'public')));
-
-app.use((req, res, next) => {
-  if (path.extname(req.path).length) {
-    const err = new Error('Not found');
-    err.status = 404;
-    next(err);
-  } else {
-    next();
-  }
-});
+//app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
