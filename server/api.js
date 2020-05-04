@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const path = require('path');
-const { downloadVideo } = require('./controller/download_video');
-const { searchVideos } = require('./controller/search_videos');
+const { downloadVideo } = require('../controller/download_video');
+const { searchVideos } = require('../controller/search_videos');
 
 router.post('/search_videos', searchVideos);
 router.post('/download_video', downloadVideo);
