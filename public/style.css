@@ -219,3 +219,17 @@ body {
   font-size: 0.9rem;
   color: #484848;
 }
+
+.download-loader {
+  width: 3rem;
+  height: 3rem;
+  display: none;
+}
+.download-loader > img {
+  width: 100%;
+  height: 100%;
+}
+
+.error {
+  margin-top: 10rem;
+}

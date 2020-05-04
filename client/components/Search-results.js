@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 import FileSaver from 'file-saver';
 const SearchResults = ({ videoResults, format }) => {
+  console.log(format);
+  const ref = useRef();
+
   return (
     <div className="search_results">
       {videoResults.map((video) => {
@@ -27,7 +30,10 @@ const SearchResults = ({ videoResults, format }) => {
               <button
                 type="submit"
                 className="relatedButton"
-                onClick={() => {
+                onClick={(e) => {
+                  e.persist();
+                  e.target.nextElementSibling.style.display = 'inline-block';
+                  e.target.style.display = 'none';
                   axios({
                     method: 'post',
                     url: '/api/download_video',
@@ -35,10 +41,13 @@ const SearchResults = ({ videoResults, format }) => {
                     data: {
                       url: video.link,
                       title: video.title,
-                      format: 'mp4',
+                      format,
                     },
                   })
                     .then((response) => {
+                      e.target.nextElementSibling.style.display = 'none';
+                      e.target.disabled = true;
+                      e.target.style.display = 'inline-block';
                       const responseInfo = JSON.parse(response.config.data);
                       var file = new File(
                         [response.data],
@@ -53,6 +62,9 @@ const SearchResults = ({ videoResults, format }) => {
               >
                 Download
               </button>
+              <div ref={ref} className="download-loader">
+                <img src="images/loader.gif" />
+              </div>
             </div>
           </div>
         );
