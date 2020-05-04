@@ -7,63 +7,10 @@
     <title>YoutubeDownloader</title>
 
     <link rel="stylesheet" href="./style.css" />
+    <script defer src="./bundle.js"></script>
   </head>
 
   <body>
-    <div class="main">
-      <img src="images/node.png" hidden />
-      <div class="form">
-        <div class="form-base">
-          <input class="input" name="input" type="text" placeholder="search" />
-        </div>
-        <div class="media-select">
-          <button class="media-select-mp4">
-            <p>mp4</p>
-          </button>
-
-          <button class="media-select-mp3s">
-            <p>mp3</p>
-          </button>
-        </div>
-      </div>
-      <div class="loader">
-        <img src="images/loader.gif" />
-      </div>
-
-      <div class="search_results"></div>
-      <div class="author">
-        <p>
-          Youtube downloader is one of my experimental projects, and it’s fully
-          functional. Due to the nature of the application, I can not guaranty
-          how long it’s going to be working.<br />
-          Check the
-          <a
-            href="https://github.com/Taulantvokshi/youtube-downloader"
-            target="_blank"
-          >
-            Github
-          </a>
-          repo for implementation details. Thank You
-
-          <br />
-          <br />
-        </p>
-
-        <p>
-          If you download more than 20 videos/songs a day I will throttle you :
-          ^ )
-        </p>
-
-        <br />
-        <p>
-          Created by
-          <a href="https://www.linkedin.com/in/taulant-vokshi/" target="_blank"
-            >Taulant Vokshi</a
-          >
-        </p>
-      </div>
-      <div class="error"><p>Empty Search!</p></div>
-    </div>
-    <script src="./bundle.js"></script>
+    <div id="root"></div>
   </body>
 </html>

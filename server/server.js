@@ -16,15 +16,14 @@ app.use(express.json());
 
 //Routes
 app.use('/api', require('./api'));
-
-app.post('/network', (req, res, next) => {
-  res.json(req.body);
-});
+// app.post('/network', (req, res, next) => {
+//   res.json(req.body);
+// });
 //Static files served by nginx
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/index.html'));
+  res.sendFile(path.join(__dirname, '..', 'public/index.html'));
 });
 
 app.use((req, res, next) => {
