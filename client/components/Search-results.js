@@ -35,7 +35,7 @@ const SearchResults = ({ videoResults, format }) => {
                     data: {
                       url: video.link,
                       title: video.title,
-                      format,
+                      format: 'mp4',
                     },
                   })
                     .then((response) => {
