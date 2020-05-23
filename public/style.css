@@ -159,6 +159,10 @@ body {
   border: none;
   cursor: pointer;
   border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+.relatedButton:hover {
+  background-color: #f1f3f4;
 }
 .imageBox {
   width: 7rem;

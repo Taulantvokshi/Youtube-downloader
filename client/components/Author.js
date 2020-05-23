@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-child-element-spacing */
 import React from 'react';
 
 const Author = () => {

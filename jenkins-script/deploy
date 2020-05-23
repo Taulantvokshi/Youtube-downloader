@@ -1,0 +1,10 @@
+#!/bin/sh
+ssh -t -t taulantvokshi@examples.buzz <<EOF
+ cd ~/youtube-downloader
+ pm2 stop all
+ git pull
+ npm install
+ npm run production
+ pm2 restart all
+ exit
+EOF

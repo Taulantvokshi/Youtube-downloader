@@ -24,7 +24,7 @@ const App = ({ getResults, searchResults, clearSearchResults }) => {
     setLoader(true);
     if (!search) {
       setEmptySearch(true);
-      ref.current.style.border = '1px solid red';
+      ref.current.style.border = '1px solid #ff5151';
     } else {
       setEmptySearch(false);
       ref.current.style.border = '1px solid #e0e0e0';

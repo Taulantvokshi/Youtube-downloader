@@ -16,14 +16,14 @@ const searchVideo = (search, callback) => {
         if (error) {
           callback(error);
         } else {
-          searchResults.items = searchResults.items.filter((item) => {
-            if (item.duration) {
-              const duration = item.duration.split(':');
-              if (duration.length <= 2) {
-                return Number(duration[0]) < 7.0;
-              }
-            }
-          });
+          // searchResults.items = searchResults.items.filter((item) => {
+          //   if (item.duration) {
+          //     const duration = item.duration.split(':');
+          //     if (duration.length <= 2) {
+          //       return Number(duration[0]) < 7.0;
+          //     }
+          //   }
+          // });
           callback(null, searchResults);
         }
       });
