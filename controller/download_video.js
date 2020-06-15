@@ -4,9 +4,7 @@ require('dotenv').config();
 //Location of your ffmpeg
 //if you are deploying on elastc beanstalk use the .ebextensions to install the ffmpeg
 // this is where ffmpeg is installed on ec2 machine '/usr/local/bin/ffmpeg/ffmpeg-4.2.2-amd64-static/ffmpeg';
-const FFmpegPath =
-  process.env.ffmpegPath ||
-  '/usr/local/bin/ffmpeg/ffmpeg-4.2.2-amd64-static/ffmpeg';
+const FFmpegPath = '/usr/local/bin/ffmpeg/ffmpeg-4.2.2-amd64-static/ffmpeg';
 
 exports.downloadVideo = (req, res, next) => {
   const searchString = req.body.url;
