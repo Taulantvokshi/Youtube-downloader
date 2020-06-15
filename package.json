@@ -24,7 +24,7 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "ytdl-core": "^2.0.1",
+    "ytdl-core": "^2.1.7",
     "ytsr": "^0.1.12"
   },
   "devDependencies": {
